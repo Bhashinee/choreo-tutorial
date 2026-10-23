@@ -2,6 +2,11 @@ import ballerina/http;
 import ballerina/io;
 
 const int PORT = 8086;
+configurable string serviceURL = os:getEnv("CHOREO_CON1_SERVICEURL");
+configurable string consumerKey = os:getEnv("CHOREO_CON1_CONSUMERKEY");
+configurable string consumerSecret = os:getEnv("CHOREO_CON1_CONSUMERSECRET");
+configurable string tokenURL = os:getEnv("CHOREO_CON1_TOKENURL");
+configurable string choreoApiKey = os:getEnv("CHOREO_CON1_APIKEY");
 
 type Album readonly & record {
     string title;
@@ -22,6 +27,10 @@ service /backend on new http:Listener(PORT) {
 
     resource function get albums/[string artistName]() returns Album[]|error? {
         io:println("artistName: " + artistName);
+        io:println("serviceURL: " + serviceURL);
+        io:println("consumerKey: " + consumerKey);
+        io:println("tokenURL: " + tokenURL);
+        io:println("choreoApiKey: " + choreoApiKey);
         Album[] artistAlbums = self.albums.filter(function (Album album) returns boolean {
             return album.artist == artistName;
         });
